@@ -1,0 +1,23 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "generate a profile of your teammates",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewyu22/team-profile-generator.git"
+  },
+  "author": "Andrew Yu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewyu22/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/andrewyu22/team-profile-generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.0",
+    "jest": "^27.4.3"
+  }
+}
