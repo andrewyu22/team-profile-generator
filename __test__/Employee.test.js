@@ -1,4 +1,6 @@
+// import Employee Class
 const Employee = require('../lib/Employee.js');
+
 // test Employee objects
 test('create Employee Object', () => {
     const employee = new Employee('Test1', 1, 'test1@gmail.com');
