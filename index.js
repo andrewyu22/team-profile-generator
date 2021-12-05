@@ -3,9 +3,19 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
+
 let id = 0;
 
+// increment ID
+function generateid() {
+    // increase id by 1
+    id++;
+    return id;
+}
+
+// 
 const promptManager = () => {
+    // prompt users questions and return the answers
     return inquirer.prompt([{
             type: 'input',
             name: 'managerName',
@@ -57,6 +67,7 @@ const promptEmployee = employeeData => {
     if (!employeeData.employees) {
         employeeData.employees = [];
     }
+    // prompt users questions and return the answers
     return inquirer.prompt([{
                 type: 'confirm',
                 name: 'newEmployee',
@@ -136,6 +147,27 @@ const promptEmployee = employeeData => {
             }
         });
 }
+
 promptManager()
     .then(promptEmployee)
-    .then(answers => console.log(answers));
+    .then(answers => {
+        let team = [];
+        const manager = new Manager(answers.managerName, generateid(), answers.managerEmail, answers.managerNumber);
+        team.push(manager);
+        answers.employees.forEach(employee => {
+            if (employee.newEmployee) {
+                switch (employee.employeeRole) {
+                    case 'Engineer':
+                        const engineer = new Engineer(employee.employeeName, generateid(), employee.employeeEmail, employee.github);
+                        team.push(engineer);
+                        break;
+                    case 'Intern':
+                        const intern = new Intern(employee.employeeName, generateid(), employee.employeeEmail, employee.school);
+                        team.push(intern);
+                        break;
+                }
+            }
+        })
+        console.log(team);
+        return team;
+    })
