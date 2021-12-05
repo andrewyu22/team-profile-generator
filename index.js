@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
-
+const generateHTML = require('./src/html-template.js');
 let id = 0;
 
 // increment ID
@@ -13,10 +13,12 @@ function generateid() {
     return id;
 }
 
-// 
+// prompt for new Manager's Information
 const promptManager = () => {
     // prompt users questions and return the answers
-    return inquirer.prompt([{
+    return inquirer.prompt([
+        // get Managers Name
+        {
             type: 'input',
             name: 'managerName',
             message: "Please enter the manager's name: (Required)",
@@ -29,6 +31,7 @@ const promptManager = () => {
                 }
             }
         },
+        // get Managers Email
         {
             type: 'input',
             name: 'managerEmail',
@@ -42,6 +45,7 @@ const promptManager = () => {
                 }
             }
         },
+        // get Managers Office Number
         {
             type: 'input',
             name: 'managerNumber',
@@ -58,6 +62,7 @@ const promptManager = () => {
     ])
 }
 
+// prompt for new Employee's Information
 const promptEmployee = employeeData => {
     console.log(`
     =================
@@ -68,12 +73,15 @@ const promptEmployee = employeeData => {
         employeeData.employees = [];
     }
     // prompt users questions and return the answers
-    return inquirer.prompt([{
+    return inquirer.prompt([
+            // Confirm if we would like to add a new employee
+            {
                 type: 'confirm',
                 name: 'newEmployee',
                 message: "Would you like to add a new Employee?",
                 default: true
             },
+            // If newEmployee is true, ask for Employee's Name
             {
                 type: 'input',
                 name: 'employeeName',
@@ -88,6 +96,7 @@ const promptEmployee = employeeData => {
                     }
                 }
             },
+            // If newEmployee is true, ask for Employee's Email
             {
                 type: 'input',
                 name: 'employeeEmail',
@@ -102,6 +111,7 @@ const promptEmployee = employeeData => {
                     }
                 }
             },
+            // If newEmployee is true, ask for Employee's Role
             {
                 type: 'list',
                 name: 'employeeRole',
@@ -109,6 +119,7 @@ const promptEmployee = employeeData => {
                 when: confirmEmployee => confirmEmployee.newEmployee,
                 choices: ['Engineer', 'Intern']
             },
+            // If employeeRole is Engineer, ask for github username
             {
                 type: 'input',
                 name: 'github',
@@ -123,6 +134,7 @@ const promptEmployee = employeeData => {
                     }
                 }
             },
+            // if employeeRole is Intern, ask for school Name
             {
                 type: 'input',
                 name: 'school',
@@ -139,10 +151,14 @@ const promptEmployee = employeeData => {
             }
         ])
         .then(newEmployee => {
+            // push new Employee information into employees array
             employeeData.employees.push(newEmployee);
+            // if newEmployee = true (yes)
             if (newEmployee.newEmployee) {
+                // call promptEmployee again and pass on the updated object
                 return promptEmployee(employeeData)
             } else {
+                // return the array of objects
                 return employeeData;
             }
         });
@@ -168,6 +184,13 @@ promptManager()
                 }
             }
         })
-        console.log(team);
         return team;
+    })
+    .then(teamData => {
+        return generateHTML(teamData);
+    })
+    .then(htmlData => {
+        fs.writeFile('./dist/index.html', htmlData, err => {
+            err ? console.log(err) : console.log("HTML Generated!");
+        })
     })
