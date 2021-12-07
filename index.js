@@ -1,8 +1,8 @@
-const fs = require('fs');
 const inquirer = require('inquirer');
 const Manager = require('./lib/Manager.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
+const { writeFile, copyFile } = require('./lib/generateFile.js');
 const generateHTML = require('./src/html-template.js');
 let id = 0;
 
@@ -205,8 +205,10 @@ promptManager()
         return generateHTML(teamData);
     })
     .then(htmlData => {
-        // take HTML template and write it into /dist/index.html (Or generate a new file if it doesn't exists)
-        fs.writeFile('./dist/index.html', htmlData, err => {
-            err ? console.log(err) : console.log("HTML Generated!");
-        })
+        // take HTML template and writeFile and Copy Css File into dist folder
+        writeFile(htmlData);
+        copyFile();
     })
+    .catch(err => {
+        console.log(err);
+    });
