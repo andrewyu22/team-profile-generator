@@ -167,29 +167,45 @@ const promptEmployee = employeeData => {
 promptManager()
     .then(promptEmployee)
     .then(answers => {
+        // create empty team array
         let team = [];
+        // create a new class object called manager
         const manager = new Manager(answers.managerName, generateid(), answers.managerEmail, answers.managerNumber);
+        // push manager object into team array
         team.push(manager);
+        // employees is an array of objects of employee (Iterate through each employee)
         answers.employees.forEach(employee => {
+            // make sure newEmployee confirm is true
             if (employee.newEmployee) {
+                // switch base off employee role
                 switch (employee.employeeRole) {
+                    // if role === Engineer
                     case 'Engineer':
+                        // create a new class object called engineer
                         const engineer = new Engineer(employee.employeeName, generateid(), employee.employeeEmail, employee.github);
+                        // push engineer object into team array
                         team.push(engineer);
                         break;
+                        // if role === Intern
                     case 'Intern':
+                        // create a new class object called engineer
                         const intern = new Intern(employee.employeeName, generateid(), employee.employeeEmail, employee.school);
+                        // push intern object into team array
                         team.push(intern);
                         break;
                 }
             }
         })
+
+        // return array of class objects
         return team;
     })
     .then(teamData => {
+        // take array of class objects and call generateHTML function return a string of HTML template
         return generateHTML(teamData);
     })
     .then(htmlData => {
+        // take HTML template and write it into /dist/index.html (Or generate a new file if it doesn't exists)
         fs.writeFile('./dist/index.html', htmlData, err => {
             err ? console.log(err) : console.log("HTML Generated!");
         })

@@ -6,7 +6,7 @@ const generateCardBody = role => {
                         </div>`
         case 'Engineer':
             return `    <div class="card-body border border-secondary m-2">
-                            <h5>Github: ${role.getGithub()}</h5>
+                            <h5>Github: <a class="card-link" href="https://www.github.com/${role.getGithub()}" target="_blank">${role.getGithub()}</a></h5>
                         </div>`
         case 'Intern':
             return `    <div class="card-body border border-secondary m-2">
