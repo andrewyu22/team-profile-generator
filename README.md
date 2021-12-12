@@ -8,6 +8,8 @@ Repo: https://github.com/andrewyu22/team-profile-generator
 
 Link: No link available for this project!
 
+Video: https://watch.screencastify.com/v/TB5Ff1DDCjkrUydBu44M
+
 ---
 ## Table of Contents 
 
@@ -26,7 +28,13 @@ Link: No link available for this project!
 ---
 ## Usage 
 
-Prompt users a list of questions. Generate a html with their team displayed
+Prompt users a list of questions to answer.
+
+![Questions](images/answers.JPG)
+
+Generate a html with their team displayed
+
+![Result](images/result.JPG)
 
 ---
 ## License
