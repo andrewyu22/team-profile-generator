@@ -1,3 +1,4 @@
+// Generate the last div base off Role 
 const generateCardBody = role => {
     switch (role.getRole()) {
         case 'Manager':
@@ -14,6 +15,8 @@ const generateCardBody = role => {
                         </div>`
     }
 }
+
+// Generate a card per employees in the array
 const generateCard = data => {
         return `
         <div class="row justify-content-center">
@@ -39,6 +42,7 @@ const generateCard = data => {
         </div>`;
 }
 
+// return HTML
 module.exports = teamData => {
     return `
 <!DOCTYPE html>
